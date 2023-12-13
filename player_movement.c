@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:12:50 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/13 11:26:46 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/13 11:33:09 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ float distance(float x1, float x2, float y1, float y2);
 static void	move_player(int key, t_mlx *mlx)
 {
 	clear_display(mlx);
-	map = map_creation(&mlx->map, mlx);
+	map_creation(&mlx->map, mlx);
 	if (key == XK_Up)
 	{
 		mlx->p1.x += mlx->p1.dx * 5;
