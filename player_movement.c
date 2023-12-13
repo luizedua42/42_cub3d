@@ -6,20 +6,18 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:12:50 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/13 14:59:52 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:40:33 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-float distance(float x1, float x2, float y1, float y2);
 
 static void	move_player(int key, t_mlx *mlx)
 {
 	char **map;
 	clear_display(mlx);
 	map = map_creation(&mlx->map, mlx);
-	v_rays(mlx, map);
+	rays(mlx, map);
 	if (key == XK_Up)
 	{
 		mlx->p1.x += mlx->p1.dx * 5;
@@ -88,7 +86,3 @@ void	draw_p1line(t_mlx *mlx)
 	}
 }
 
-float distance(float x1, float x2, float y1, float y2)
-{
-	return(sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
-}

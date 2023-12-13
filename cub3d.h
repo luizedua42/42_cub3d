@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:13:51 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/13 14:23:56 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:40:49 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@ typedef struct s_player
 	float		ang;
 }				t_player;
 
+typedef struct s_rays
+{
+	float		hd;
+	float		hx;
+	float		hy;
+	float		vd;
+	float		vx;
+	float		vy;
+}				t_rays;
+
 typedef struct s_map
 {
 	int			x;
@@ -55,6 +65,7 @@ typedef struct s_mlx
 	int			endian;
 	t_player	p1;
 	t_map		map;
+	t_rays		rays;
 }				t_mlx;
 
 // Funcs
@@ -68,5 +79,6 @@ void			draw_p1line(t_mlx *mlx);
 void			draw_rays(t_mlx *mlx, float x2, float y2);
 void 			v_rays(t_mlx *mlx, char **map);
 void			h_rays(t_mlx *mlx, char **map);
+void			rays(t_mlx *mlx, char ** map);
 
 #endif

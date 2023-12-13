@@ -6,17 +6,23 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:09:05 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/13 14:59:44 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:40:17 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+float distance(float x1, float x2, float y1, float y2);
+
 void h_rays(t_mlx *mlx, char **map)
 {
 	int r,mx,my;
 	float rx,ry, ra, xo, yo;
 	
 	ra = mlx->p1.ang;
+	mlx->rays.hd = 10000;
+	mlx->rays.hx = mlx->p1.x;
+	mlx->rays.hy = mlx->p1.y;
 	for(r=0;r<1;r++)
 	{
 		float aTan=-1/tan(ra);
@@ -44,11 +50,15 @@ void h_rays(t_mlx *mlx, char **map)
 			mx = (int)rx >> 6;
 			my = (int)ry >> 6;
 			if( my < 0 || mx < 0 || mx > 7 || my > 7 || map[my][mx] == '1')
+			{
+				mlx->rays.hx = rx;
+				mlx->rays.hy = ry;
+				mlx->rays.hd = distance(mlx->p1.x, mlx->rays.hx, mlx->p1.y, mlx->rays.hy);
 				break;
+			}
 			rx += xo;
 			ry += yo;
 		}
-		draw_rays(mlx, rx, ry);
 	}
 }
 
@@ -58,6 +68,9 @@ void v_rays(t_mlx *mlx, char **map)
 	float rx,ry, ra, xo, yo;
 	
 	ra = mlx->p1.ang;
+	mlx->rays.vd = 10000;
+	mlx->rays.vx = mlx->p1.x;
+	mlx->rays.vy = mlx->p1.y;
 	for(r=0;r<1;r++)
 	{
 		float nTan=-tan(ra);
@@ -85,11 +98,15 @@ void v_rays(t_mlx *mlx, char **map)
 			mx = (int)rx >> 6;
 			my = (int)ry >> 6;
 			if( my < 0 || mx < 0 || mx > 7 || my > 7 || map[my][mx] == '1')
+			{
+				mlx->rays.vx = rx;
+				mlx->rays.vy = ry;
+				mlx->rays.vd = distance(mlx->p1.x, mlx->rays.vx, mlx->p1.y, mlx->rays.vy);
 				break;
+			}
 			rx += xo;
 			ry += yo;
 		}
-		draw_rays(mlx, rx, ry);
 	}
 }
 
@@ -123,4 +140,19 @@ void	draw_rays(t_mlx *mlx, float x2, float y2)
 		y += dy;
 		i++;
 	}
+}
+
+float distance(float x1, float x2, float y1, float y2)
+{
+	return(sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
+}
+
+void	rays(t_mlx *mlx, char ** map)
+{
+	h_rays(mlx, map);
+	v_rays(mlx, map);
+	if(mlx->rays.hd > mlx->rays.vd)
+		draw_rays(mlx, mlx->rays.vx, mlx->rays.vy);
+	if (mlx->rays.hd < mlx->rays.vd)
+		draw_rays(mlx, mlx->rays.hx, mlx->rays.hy);
 }
