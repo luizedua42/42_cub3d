@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:13:51 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/13 11:27:32 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:40:49 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,22 @@
 // Structs
 typedef struct s_player
 {
-	int			x;
-	int			y;
+	float		x;
+	float		y;
 	float		dx;
 	float		dy;
 	float		ang;
 }				t_player;
 
-typedef struct s_v_line
+typedef struct s_rays
 {
-	float		vx;
-	float		vy;
-	float		dist_v;
-}				t_v_line;
-
-typedef struct s_h_line
-{
-
+	float		hd;
 	float		hx;
 	float		hy;
-	float		dist_h;
-}				t_h_line;
+	float		vd;
+	float		vx;
+	float		vy;
+}				t_rays;
 
 typedef struct s_map
 {
@@ -70,6 +65,7 @@ typedef struct s_mlx
 	int			endian;
 	t_player	p1;
 	t_map		map;
+	t_rays		rays;
 }				t_mlx;
 
 // Funcs
@@ -80,8 +76,9 @@ void			paint_img(t_mlx *mlx, int color, int x, int y);
 void			clear_display(t_mlx *mlx);
 char			**map_creation(t_map *map, t_mlx *mlx);
 void			draw_p1line(t_mlx *mlx);
-void			horizontal_line_checker(t_mlx *mlx, char **map);
-void			vertical_line_checker(t_mlx *mlx, char **map);
-void			draw_rays(t_mlx *mlx, float x1, float y1, float x2, float y2);
+void			draw_rays(t_mlx *mlx, float x2, float y2);
+void 			v_rays(t_mlx *mlx, char **map);
+void			h_rays(t_mlx *mlx, char **map);
+void			rays(t_mlx *mlx, char ** map);
 
 #endif

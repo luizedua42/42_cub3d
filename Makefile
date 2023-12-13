@@ -14,7 +14,7 @@ LIBS := -lmlx -lXext -lX11 -lm
 
 OBJ_DIR := build
 
-SRCS := cub3d.c player_movement.c clear_display.c map.c
+SRCS := cub3d.c player_movement.c clear_display.c map.c rays.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 all: $(NAME)

@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:16:21 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/13 11:34:27 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:40:57 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	run_window(t_mlx *mlx);
 void	init_mlx(t_mlx **mlx);
 int		close_win(t_mlx *mlx);
 int		draw_player(t_mlx *mlx);
-void	player_init(t_mlx *mlx, int x, int y);
+void	player_init(t_mlx *mlx, float x, float y);
 
 int	main(int argc, char **argv)
 {
@@ -35,10 +35,10 @@ int	main(int argc, char **argv)
 void	run_window(t_mlx *mlx)
 {
 	init_mlx(&mlx);
-	player_init(mlx, 80, 90);
+	player_init(mlx, 2, 3);
 	mlx_hook(mlx->p_win, 17, 0, close_win, mlx);
 	mlx_hook(mlx->p_win, KeyPress, KeyPressMask, &key_press, mlx);
-	map_creation(&mlx->map, mlx);
+	rays(mlx, map_creation(&mlx->map, mlx));
 	draw_p1line(mlx);
 	mlx_loop_hook(mlx->p_mlx, draw_player, mlx);
 	mlx_loop(mlx->p_mlx);
@@ -92,10 +92,10 @@ int	close_win(t_mlx *mlx)
 	exit(EXIT_SUCCESS);
 }
 
-void player_init(t_mlx *mlx, int x, int y)
+void player_init(t_mlx *mlx, float x, float y)
 {
-	mlx->p1.x = x;
-	mlx->p1.y = y;
+	mlx->p1.x = x * 64;
+	mlx->p1.y = y * 64;
 	mlx->p1.ang = 0;
 	mlx->p1.dx = cos(mlx->p1.ang);
 	mlx->p1.dy = sin(mlx->p1.ang);
