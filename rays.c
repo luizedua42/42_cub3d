@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:09:05 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/13 14:28:18 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:59:44 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void h_rays(t_mlx *mlx, char **map)
 		float aTan=-1/tan(ra);
 		if (ra > M_PI)
 		{
-			ry = (((int)mlx->p1.y >> 6) << 6) - 0.000001;
+			ry = (((int)mlx->p1.y >> 6) << 6) - 0.0001;
 			rx = (mlx->p1.y - ry) * aTan+mlx->p1.x; 
 			yo = -64;
 			xo = -yo * aTan;
@@ -43,7 +43,7 @@ void h_rays(t_mlx *mlx, char **map)
 		{
 			mx = (int)rx >> 6;
 			my = (int)ry >> 6;
-			if( my < 0 || mx < 0 || mx > 7 || mx > 7 || map[my][mx] == '1')
+			if( my < 0 || mx < 0 || mx > 7 || my > 7 || map[my][mx] == '1')
 				break;
 			rx += xo;
 			ry += yo;
@@ -63,7 +63,7 @@ void v_rays(t_mlx *mlx, char **map)
 		float nTan=-tan(ra);
 		if (ra > (M_PI / 2) && ra < (3 * M_PI / 2))
 		{
-			rx = (((int)mlx->p1.x >> 6) << 6) - 0.000001;
+			rx = (((int)mlx->p1.x >> 6) << 6) - 0.0001;
 			ry = (mlx->p1.x - rx) * nTan+mlx->p1.y; 
 			xo = -64;
 			yo = -xo * nTan;
@@ -75,7 +75,7 @@ void v_rays(t_mlx *mlx, char **map)
 			xo = 64;
 			yo = -xo * nTan;
 		}
-		if (ra == 0 || ra == M_PI)
+		if (ra == (M_PI / 2) || ra == (3 * M_PI / 2))
 		{
 			rx = mlx->p1.x;
 			ry = mlx->p1.y;
@@ -84,7 +84,7 @@ void v_rays(t_mlx *mlx, char **map)
 		{
 			mx = (int)rx >> 6;
 			my = (int)ry >> 6;
-			if( my < 0 || mx < 0 || mx > 7 || mx > 7 || map[my][mx] == '1')
+			if( my < 0 || mx < 0 || mx > 7 || my > 7 || map[my][mx] == '1')
 				break;
 			rx += xo;
 			ry += yo;
@@ -107,7 +107,7 @@ void	draw_rays(t_mlx *mlx, float x2, float y2)
 	step = 0;
 	if (fabs(dx) > fabs(dy))
 		step = fabs(dx);
-	else if (fabs(dy) > fabs(dx))
+	else
 		step = fabs(dy);
 	dx /= step;
 	dy /= step;
