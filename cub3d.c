@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:16:21 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/13 11:34:27 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:24:15 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	run_window(t_mlx *mlx)
 	player_init(mlx, 80, 90);
 	mlx_hook(mlx->p_win, 17, 0, close_win, mlx);
 	mlx_hook(mlx->p_win, KeyPress, KeyPressMask, &key_press, mlx);
-	map_creation(&mlx->map, mlx);
+	v_rays(mlx, map_creation(&mlx->map, mlx));
 	draw_p1line(mlx);
 	mlx_loop_hook(mlx->p_mlx, draw_player, mlx);
 	mlx_loop(mlx->p_mlx);
