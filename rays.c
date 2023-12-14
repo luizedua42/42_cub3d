@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:09:05 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/13 15:40:17 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/14 11:18:59 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,97 +16,89 @@ float distance(float x1, float x2, float y1, float y2);
 
 void h_rays(t_mlx *mlx, char **map)
 {
-	int r,mx,my;
-	float rx,ry, ra, xo, yo;
-	
-	ra = mlx->p1.ang;
+	int mx,my;
+	float rx,ry, xo, yo;
+
 	mlx->rays.hd = 10000;
 	mlx->rays.hx = mlx->p1.x;
 	mlx->rays.hy = mlx->p1.y;
-	for(r=0;r<1;r++)
+	float aTan=-1/tan(mlx->rays.ra);
+	if (mlx->rays.ra > M_PI)
 	{
-		float aTan=-1/tan(ra);
-		if (ra > M_PI)
+		ry = (((int)mlx->p1.y >> 6) << 6) - 0.0001;
+		rx = (mlx->p1.y - ry) * aTan+mlx->p1.x; 
+		yo = -64;
+		xo = -yo * aTan;
+	}
+	if (mlx->rays.ra < M_PI)
+	{
+		ry = (((int)mlx->p1.y >> 6) << 6) + 64;
+		rx = (mlx->p1.y - ry) * aTan + mlx->p1.x;
+		yo = 64;
+		xo = -yo * aTan;
+	}
+	if (mlx->rays.ra == 0 || mlx->rays.ra == M_PI)
+	{
+		rx = mlx->p1.x;
+		ry = mlx->p1.y;
+	}
+	while (true)
+	{
+		mx = (int)rx >> 6;
+		my = (int)ry >> 6;
+		if( my < 0 || mx < 0 || mx > 7 || my > 7 || map[my][mx] == '1')
 		{
-			ry = (((int)mlx->p1.y >> 6) << 6) - 0.0001;
-			rx = (mlx->p1.y - ry) * aTan+mlx->p1.x; 
-			yo = -64;
-			xo = -yo * aTan;
+			mlx->rays.hx = rx;
+			mlx->rays.hy = ry;
+			mlx->rays.hd = distance(mlx->p1.x, mlx->rays.hx, mlx->p1.y, mlx->rays.hy);
+			break;
 		}
-		if (ra < M_PI)
-		{
-			ry = (((int)mlx->p1.y >> 6) << 6) + 64;
-			rx = (mlx->p1.y - ry) * aTan + mlx->p1.x;
-			yo = 64;
-			xo = -yo * aTan;
-		}
-		if (ra == 0 || ra == M_PI)
-		{
-			rx = mlx->p1.x;
-			ry = mlx->p1.y;
-		}
-		while (true)
-		{
-			mx = (int)rx >> 6;
-			my = (int)ry >> 6;
-			if( my < 0 || mx < 0 || mx > 7 || my > 7 || map[my][mx] == '1')
-			{
-				mlx->rays.hx = rx;
-				mlx->rays.hy = ry;
-				mlx->rays.hd = distance(mlx->p1.x, mlx->rays.hx, mlx->p1.y, mlx->rays.hy);
-				break;
-			}
-			rx += xo;
-			ry += yo;
-		}
+		rx += xo;
+		ry += yo;
 	}
 }
 
 void v_rays(t_mlx *mlx, char **map)
 {
-	int r,mx,my;
-	float rx,ry, ra, xo, yo;
-	
-	ra = mlx->p1.ang;
+	int mx,my;
+	float rx,ry, xo, yo;
+
 	mlx->rays.vd = 10000;
 	mlx->rays.vx = mlx->p1.x;
 	mlx->rays.vy = mlx->p1.y;
-	for(r=0;r<1;r++)
+	float nTan=-tan(mlx->rays.ra);
+	if (mlx->rays.ra > (M_PI / 2) && mlx->rays.ra < (3 * M_PI / 2))
 	{
-		float nTan=-tan(ra);
-		if (ra > (M_PI / 2) && ra < (3 * M_PI / 2))
+		rx = (((int)mlx->p1.x >> 6) << 6) - 0.0001;
+		ry = (mlx->p1.x - rx) * nTan+mlx->p1.y; 
+		xo = -64;
+		yo = -xo * nTan;
+	}
+	if (mlx->rays.ra < (M_PI / 2) || mlx->rays.ra > (3 * M_PI / 2))
+	{
+		rx = (((int)mlx->p1.x >> 6) << 6) + 64;
+		ry = (mlx->p1.x - rx) * nTan + mlx->p1.y;
+		xo = 64;
+		yo = -xo * nTan;
+	}
+	if (mlx->rays.ra == (M_PI / 2) || mlx->rays.ra == (3 * M_PI / 2))
+	{
+		rx = mlx->p1.x;
+		ry = mlx->p1.y;
+	}
+	while (true)
+	{
+		mx = (int)rx >> 6;
+		my = (int)ry >> 6;
+		if( my < 0 || mx < 0 || mx > 7 || my > 7 || map[my][mx] == '1')
 		{
-			rx = (((int)mlx->p1.x >> 6) << 6) - 0.0001;
-			ry = (mlx->p1.x - rx) * nTan+mlx->p1.y; 
-			xo = -64;
-			yo = -xo * nTan;
+			mlx->rays.vx = rx;
+			mlx->rays.vy = ry;
+			mlx->rays.vd = distance(mlx->p1.x, mlx->rays.vx, mlx->p1.y, mlx->rays.vy);
+			break;
 		}
-		if (ra < (M_PI / 2) || ra > (3 * M_PI / 2))
-		{
-			rx = (((int)mlx->p1.x >> 6) << 6) + 64;
-			ry = (mlx->p1.x - rx) * nTan + mlx->p1.y;
-			xo = 64;
-			yo = -xo * nTan;
-		}
-		if (ra == (M_PI / 2) || ra == (3 * M_PI / 2))
-		{
-			rx = mlx->p1.x;
-			ry = mlx->p1.y;
-		}
-		while (true)
-		{
-			mx = (int)rx >> 6;
-			my = (int)ry >> 6;
-			if( my < 0 || mx < 0 || mx > 7 || my > 7 || map[my][mx] == '1')
-			{
-				mlx->rays.vx = rx;
-				mlx->rays.vy = ry;
-				mlx->rays.vd = distance(mlx->p1.x, mlx->rays.vx, mlx->p1.y, mlx->rays.vy);
-				break;
-			}
-			rx += xo;
-			ry += yo;
-		}
+		rx += xo;
+		ry += yo;
 	}
 }
 
@@ -119,8 +111,8 @@ void	draw_rays(t_mlx *mlx, float x2, float y2)
 	float	y;
 	float	i;
 
-	dx = x2 - mlx->p1.x;
-	dy = y2 - mlx->p1.y;
+	dx = x2  - mlx->p1.x;
+	dy = y2  - mlx->p1.y;
 	step = 0;
 	if (fabs(dx) > fabs(dy))
 		step = fabs(dx);
@@ -149,10 +141,24 @@ float distance(float x1, float x2, float y1, float y2)
 
 void	rays(t_mlx *mlx, char ** map)
 {
-	h_rays(mlx, map);
-	v_rays(mlx, map);
-	if(mlx->rays.hd > mlx->rays.vd)
-		draw_rays(mlx, mlx->rays.vx, mlx->rays.vy);
-	if (mlx->rays.hd < mlx->rays.vd)
-		draw_rays(mlx, mlx->rays.hx, mlx->rays.hy);
+	int r = -1;
+	mlx->rays.ra = mlx->p1.ang - RAD * 30;
+	if(mlx->rays.ra < 0)
+		mlx->rays.ra += 2 * M_PI;
+	if (mlx->rays.ra > 2 * M_PI)
+		mlx->rays.ra -= 2*M_PI;
+	while (++r < 60)
+	{
+		h_rays(mlx, map);
+		v_rays(mlx, map);
+		if(mlx->rays.hd > mlx->rays.vd)
+			draw_rays(mlx, mlx->rays.vx, mlx->rays.vy);
+		if (mlx->rays.hd < mlx->rays.vd)
+			draw_rays(mlx, mlx->rays.hx, mlx->rays.hy);
+		mlx->rays.ra += RAD;
+		if(mlx->rays.ra < 0)
+			mlx->rays.ra = RAD * 359;
+		if (mlx->rays.ra > 2 * M_PI)
+			mlx->rays.ra = RAD - RAD;
+	}
 }
