@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:13:51 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/13 15:40:49 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:16:25 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_player
 
 typedef struct s_rays
 {
+	float		ra;
 	float		hd;
 	float		hx;
 	float		hy;
