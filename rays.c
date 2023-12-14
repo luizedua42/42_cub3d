@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/13 13:09:05 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/14 15:57:02 by luizedua         ###   ########.fr       */
+/*   Created: 2023/12/14 16:01:11 by luizedua          #+#    #+#             */
+/*   Updated: 2023/12/14 16:02:41 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,11 +191,11 @@ void draw_lines(t_mlx *mlx, int map_x, int map_y, int color, float off)
 	int y = 0;
 	while (y < map_y - off)
 	{
-		int x = 0;
-		while (x < map_x)
+		int x = map_x;
+		while (x < map_x + 8)
 		{
 			if (map_x < WIN_W &&  map_y <= WIN_H)
-				paint_img(mlx, color, map_x, off +  y);
+				paint_img(mlx, color, x, off +  y);
 			x++;
 		}
 		y++;
