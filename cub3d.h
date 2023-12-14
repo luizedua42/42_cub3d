@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:13:51 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/13 16:16:25 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/14 15:43:21 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 // Defines
 # define RAD 0.0174533
-# define WIN_W 800
-# define WIN_H 600
+# define WIN_W 1024
+# define WIN_H 512
 // Includes
 # include <mlx.h>
 # include <stdio.h>
@@ -40,6 +40,7 @@ typedef struct s_player
 
 typedef struct s_rays
 {
+	float		fdist;
 	float		ra;
 	float		hd;
 	float		hx;
@@ -81,5 +82,6 @@ void			draw_rays(t_mlx *mlx, float x2, float y2);
 void 			v_rays(t_mlx *mlx, char **map);
 void			h_rays(t_mlx *mlx, char **map);
 void			rays(t_mlx *mlx, char ** map);
+void			draw_square(t_mlx *mlx, int map_x, int map_y, int color);
 
 #endif

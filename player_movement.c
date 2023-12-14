@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:12:50 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/13 15:40:33 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/14 13:14:35 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void	move_player(int key, t_mlx *mlx)
 	char **map;
 	clear_display(mlx);
 	map = map_creation(&mlx->map, mlx);
-	rays(mlx, map);
 	if (key == XK_Up)
 	{
 		mlx->p1.x += mlx->p1.dx * 5;
@@ -42,6 +41,7 @@ static void	move_player(int key, t_mlx *mlx)
 	}
 	mlx->p1.dx = cos(mlx->p1.ang);
 	mlx->p1.dy = sin(mlx->p1.ang);
+	rays(mlx, map);
 	draw_p1line(mlx);
 }
 

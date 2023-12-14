@@ -6,13 +6,16 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:09:05 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/14 11:18:59 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/14 15:57:02 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 float distance(float x1, float x2, float y1, float y2);
+void paint_walls(t_mlx *mlx, int map_x, int map_y);
+void	draw_walls(t_mlx *mlx, int r);
+void draw_lines(t_mlx *mlx, int map_x, int map_y, int color, float offr);
 
 void h_rays(t_mlx *mlx, char **map)
 {
@@ -152,13 +155,49 @@ void	rays(t_mlx *mlx, char ** map)
 		h_rays(mlx, map);
 		v_rays(mlx, map);
 		if(mlx->rays.hd > mlx->rays.vd)
+		{
 			draw_rays(mlx, mlx->rays.vx, mlx->rays.vy);
+			mlx->rays.fdist = mlx->rays.vd;
+		}
 		if (mlx->rays.hd < mlx->rays.vd)
+		{
 			draw_rays(mlx, mlx->rays.hx, mlx->rays.hy);
+			mlx->rays.fdist = mlx->rays.hd;
+		}
+		draw_walls(mlx, r);
 		mlx->rays.ra += RAD;
 		if(mlx->rays.ra < 0)
 			mlx->rays.ra = RAD * 359;
 		if (mlx->rays.ra > 2 * M_PI)
 			mlx->rays.ra = RAD - RAD;
+	}
+}
+
+void	draw_walls(t_mlx *mlx, int r)
+{
+	float lineh;
+	float lineo;
+	
+	lineh = ((8*8)*WIN_H)/mlx->rays.fdist;
+	if (lineh > WIN_H)
+		lineh =	WIN_H;
+	lineo = (((float)WIN_H) - lineh) / 2;
+	draw_lines(mlx, r*8+512, lineh+lineo, 0xFF0000, lineo);
+}
+
+void draw_lines(t_mlx *mlx, int map_x, int map_y, int color, float off)
+{
+	(void)off;
+	int y = 0;
+	while (y < map_y - off)
+	{
+		int x = 0;
+		while (x < map_x)
+		{
+			if (map_x < WIN_W &&  map_y <= WIN_H)
+				paint_img(mlx, color, map_x, off +  y);
+			x++;
+		}
+		y++;
 	}
 }
