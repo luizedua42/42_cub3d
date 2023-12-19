@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:13:51 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/14 15:43:21 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/14 16:16:51 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,23 @@
 // Structs
 typedef struct s_player
 {
-	float		x;
-	float		y;
-	float		dx;
-	float		dy;
-	float		ang;
+	double		x;
+	double		y;
+	double		dx;
+	double		dy;
+	double		ang;
 }				t_player;
 
 typedef struct s_rays
 {
-	float		fdist;
-	float		ra;
-	float		hd;
-	float		hx;
-	float		hy;
-	float		vd;
-	float		vx;
-	float		vy;
+	double		fdist;
+	double		ra;
+	double		hd;
+	double		hx;
+	double		hy;
+	double		vd;
+	double		vx;
+	double		vy;
 }				t_rays;
 
 typedef struct s_map
@@ -78,7 +78,7 @@ void			paint_img(t_mlx *mlx, int color, int x, int y);
 void			clear_display(t_mlx *mlx);
 char			**map_creation(t_map *map, t_mlx *mlx);
 void			draw_p1line(t_mlx *mlx);
-void			draw_rays(t_mlx *mlx, float x2, float y2);
+void			draw_rays(t_mlx *mlx, double x2, double y2);
 void 			v_rays(t_mlx *mlx, char **map);
 void			h_rays(t_mlx *mlx, char **map);
 void			rays(t_mlx *mlx, char ** map);

@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:12:50 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/14 13:14:35 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/14 16:16:51 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ int	key_press(int key_code, t_mlx *mlx)
 
 void	draw_p1line(t_mlx *mlx)
 {
-	float	step;
-	float	dx;
-	float	dy;
-	float	x;
-	float	y;
-	float	i;
+	double	step;
+	double	dx;
+	double	dy;
+	double	x;
+	double	y;
+	double	i;
 
 	dx = mlx->p1.dx * 30;
 	dy = mlx->p1.dy * 30;

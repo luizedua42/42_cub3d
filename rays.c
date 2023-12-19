@@ -6,26 +6,26 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 16:01:11 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/14 16:02:41 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/19 11:02:17 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-float distance(float x1, float x2, float y1, float y2);
+double distance(double x1, double x2, double y1, double y2);
 void paint_walls(t_mlx *mlx, int map_x, int map_y);
 void	draw_walls(t_mlx *mlx, int r);
-void draw_lines(t_mlx *mlx, int map_x, int map_y, int color, float offr);
+void draw_lines(t_mlx *mlx, int map_x, int map_y, int color, double offr);
 
 void h_rays(t_mlx *mlx, char **map)
 {
 	int mx,my;
-	float rx,ry, xo, yo;
+	double rx,ry, xo, yo;
 
 	mlx->rays.hd = 10000;
 	mlx->rays.hx = mlx->p1.x;
 	mlx->rays.hy = mlx->p1.y;
-	float aTan=-1/tan(mlx->rays.ra);
+	double aTan=-1/tan(mlx->rays.ra);
 	if (mlx->rays.ra > M_PI)
 	{
 		ry = (((int)mlx->p1.y >> 6) << 6) - 0.0001;
@@ -64,12 +64,12 @@ void h_rays(t_mlx *mlx, char **map)
 void v_rays(t_mlx *mlx, char **map)
 {
 	int mx,my;
-	float rx,ry, xo, yo;
+	double rx,ry, xo, yo;
 
 	mlx->rays.vd = 10000;
 	mlx->rays.vx = mlx->p1.x;
 	mlx->rays.vy = mlx->p1.y;
-	float nTan=-tan(mlx->rays.ra);
+	double nTan=-tan(mlx->rays.ra);
 	if (mlx->rays.ra > (M_PI / 2) && mlx->rays.ra < (3 * M_PI / 2))
 	{
 		rx = (((int)mlx->p1.x >> 6) << 6) - 0.0001;
@@ -105,14 +105,14 @@ void v_rays(t_mlx *mlx, char **map)
 	}
 }
 
-void	draw_rays(t_mlx *mlx, float x2, float y2)
+void	draw_rays(t_mlx *mlx, double x2, double y2)
 {
-	float	step;
-	float	dx;
-	float	dy;
-	float	x;
-	float	y;
-	float	i;
+	double	step;
+	double	dx;
+	double	dy;
+	double	x;
+	double	y;
+	double	i;
 
 	dx = x2  - mlx->p1.x;
 	dy = y2  - mlx->p1.y;
@@ -137,7 +137,7 @@ void	draw_rays(t_mlx *mlx, float x2, float y2)
 	}
 }
 
-float distance(float x1, float x2, float y1, float y2)
+double distance(double x1, double x2, double y1, double y2)
 {
 	return(sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
 }
@@ -167,25 +167,33 @@ void	rays(t_mlx *mlx, char ** map)
 		draw_walls(mlx, r);
 		mlx->rays.ra += RAD;
 		if(mlx->rays.ra < 0)
-			mlx->rays.ra = RAD * 359;
+			mlx->rays.ra += 2 * M_PI;
 		if (mlx->rays.ra > 2 * M_PI)
-			mlx->rays.ra = RAD - RAD;
+			mlx->rays.ra -= 2*M_PI;
 	}
 }
 
 void	draw_walls(t_mlx *mlx, int r)
 {
-	float lineh;
-	float lineo;
-	
-	lineh = ((8*8)*WIN_H)/mlx->rays.fdist;
+	double lineh;
+	double lineo;
+	double finald;
+	double camang;
+
+	camang = mlx->rays.ra - mlx->p1.ang;
+	if(camang < 0)
+		camang = RAD * 359;
+	if (camang > RAD * 359)
+		camang = RAD - RAD;
+	finald = mlx->rays.fdist * cos(camang);
+	lineh = ((8*8) * WIN_H) / finald;
 	if (lineh > WIN_H)
 		lineh =	WIN_H;
-	lineo = (((float)WIN_H) - lineh) / 2;
+	lineo = (((double)WIN_H) - lineh) / 2;
 	draw_lines(mlx, r*8+512, lineh+lineo, 0xFF0000, lineo);
 }
 
-void draw_lines(t_mlx *mlx, int map_x, int map_y, int color, float off)
+void draw_lines(t_mlx *mlx, int map_x, int map_y, int color, double off)
 {
 	(void)off;
 	int y = 0;
