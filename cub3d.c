@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:16:21 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/14 11:16:51 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/14 16:16:51 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	run_window(t_mlx *mlx);
 void	init_mlx(t_mlx **mlx);
 int		close_win(t_mlx *mlx);
 int		draw_player(t_mlx *mlx);
-void	player_init(t_mlx *mlx, float x, float y);
+void	player_init(t_mlx *mlx, double x, double y);
 
 int	main(int argc, char **argv)
 {
@@ -92,7 +92,7 @@ int	close_win(t_mlx *mlx)
 	exit(EXIT_SUCCESS);
 }
 
-void player_init(t_mlx *mlx, float x, float y)
+void player_init(t_mlx *mlx, double x, double y)
 {
 	mlx->p1.x = x * 64;
 	mlx->p1.y = y * 64;
