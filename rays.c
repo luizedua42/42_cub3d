@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 16:01:11 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/19 11:02:17 by luizedua         ###   ########.fr       */
+/*   Updated: 2023/12/20 11:40:50 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,10 +181,10 @@ void	draw_walls(t_mlx *mlx, int r)
 	double camang;
 
 	camang = mlx->rays.ra - mlx->p1.ang;
-	if(camang < 0)
-		camang = RAD * 359;
-	if (camang > RAD * 359)
-		camang = RAD - RAD;
+	if(mlx->rays.ra < 0)
+		mlx->rays.ra += 2 * M_PI;
+	if (mlx->rays.ra > 2 * M_PI)
+		mlx->rays.ra -= 2*M_PI;
 	finald = mlx->rays.fdist * cos(camang);
 	lineh = ((8*8) * WIN_H) / finald;
 	if (lineh > WIN_H)
