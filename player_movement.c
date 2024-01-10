@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:12:50 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/14 16:16:51 by luizedua         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:06:01 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	move_player(int key, t_mlx *mlx)
 	mlx->p1.dx = cos(mlx->p1.ang);
 	mlx->p1.dy = sin(mlx->p1.ang);
 	rays(mlx, map);
-	draw_p1line(mlx);
+	// draw_p1line(mlx);
 }
 
 int	key_press(int key_code, t_mlx *mlx)

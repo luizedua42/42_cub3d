@@ -1,6 +1,6 @@
 NAME := cub3d
 CFLAGS := -Wextra -Wall -Werror
-CFLAGS += -g3
+CFLAGS += -O3
 JOBS := -j50
 MAKEFLAGS += --no-print-directory
 YELLOW := $(shell tput setaf 3)
@@ -14,7 +14,7 @@ LIBS := -lmlx -lXext -lX11 -lm
 
 OBJ_DIR := build
 
-SRCS := cub3d.c player_movement.c clear_display.c map.c rays.c
+SRCS := cub3d.c player_movement.c clear_display.c map.c rays.c ceiling.c
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 all: $(NAME)

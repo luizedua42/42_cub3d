@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:13:51 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/14 16:16:51 by luizedua         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:05:51 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 // Defines
 # define RAD 0.0174533
-# define WIN_W 1024
-# define WIN_H 512
+# define WIN_W 800
+# define WIN_H 600
+# define FOV 45
 // Includes
 # include <mlx.h>
 # include <stdio.h>
@@ -83,5 +84,7 @@ void 			v_rays(t_mlx *mlx, char **map);
 void			h_rays(t_mlx *mlx, char **map);
 void			rays(t_mlx *mlx, char ** map);
 void			draw_square(t_mlx *mlx, int map_x, int map_y, int color);
+void			ceiling_color(int color, t_mlx* mlx);
+void			floor_color(int color, t_mlx* mlx);
 
 #endif

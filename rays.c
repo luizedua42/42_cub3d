@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 16:01:11 by luizedua          #+#    #+#             */
-/*   Updated: 2023/12/20 11:40:50 by luizedua         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:05:57 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 double distance(double x1, double x2, double y1, double y2);
 void paint_walls(t_mlx *mlx, int map_x, int map_y);
 void	draw_walls(t_mlx *mlx, int r);
-void draw_lines(t_mlx *mlx, int map_x, int map_y, int color, double offr);
+void draw_lines(t_mlx *mlx, int map_x, int map_y, int color, double off);
 
 void h_rays(t_mlx *mlx, char **map)
 {
@@ -144,32 +144,32 @@ double distance(double x1, double x2, double y1, double y2)
 
 void	rays(t_mlx *mlx, char ** map)
 {
-	int r = -1;
-	mlx->rays.ra = mlx->p1.ang - RAD * 30;
-	if(mlx->rays.ra < 0)
-		mlx->rays.ra += 2 * M_PI;
-	if (mlx->rays.ra > 2 * M_PI)
-		mlx->rays.ra -= 2*M_PI;
-	while (++r < 60)
+	int r = 0;
+	double ri;
+
+	mlx->rays.ra = (mlx->p1.ang - RAD * (FOV / 2.0));
+	ri = RAD * FOV / WIN_W;
+	while (r < WIN_W)
 	{
-		h_rays(mlx, map);
-		v_rays(mlx, map);
-		if(mlx->rays.hd > mlx->rays.vd)
-		{
-			draw_rays(mlx, mlx->rays.vx, mlx->rays.vy);
-			mlx->rays.fdist = mlx->rays.vd;
-		}
-		if (mlx->rays.hd < mlx->rays.vd)
-		{
-			draw_rays(mlx, mlx->rays.hx, mlx->rays.hy);
-			mlx->rays.fdist = mlx->rays.hd;
-		}
-		draw_walls(mlx, r);
-		mlx->rays.ra += RAD;
 		if(mlx->rays.ra < 0)
 			mlx->rays.ra += 2 * M_PI;
 		if (mlx->rays.ra > 2 * M_PI)
 			mlx->rays.ra -= 2*M_PI;
+		h_rays(mlx, map);
+		v_rays(mlx, map);
+		if(mlx->rays.hd > mlx->rays.vd)
+		{
+			// draw_rays(mlx, mlx->rays.vx, mlx->rays.vy);
+			mlx->rays.fdist = mlx->rays.vd;
+		}
+		if (mlx->rays.hd < mlx->rays.vd)
+		{
+			// draw_rays(mlx, mlx->rays.hx, mlx->rays.hy);
+			mlx->rays.fdist = mlx->rays.hd;
+		}
+		draw_walls(mlx, r);
+		mlx->rays.ra += ri;
+		r++;
 	}
 }
 
@@ -186,11 +186,11 @@ void	draw_walls(t_mlx *mlx, int r)
 	if (mlx->rays.ra > 2 * M_PI)
 		mlx->rays.ra -= 2*M_PI;
 	finald = mlx->rays.fdist * cos(camang);
-	lineh = ((8*8) * WIN_H) / finald;
+	lineh = ((8*8) * WIN_H / 2) / finald;
 	if (lineh > WIN_H)
 		lineh =	WIN_H;
 	lineo = (((double)WIN_H) - lineh) / 2;
-	draw_lines(mlx, r*8+512, lineh+lineo, 0xFF0000, lineo);
+	draw_lines(mlx, r, lineh+lineo, 0xFF0000, lineo);
 }
 
 void draw_lines(t_mlx *mlx, int map_x, int map_y, int color, double off)
@@ -199,13 +199,8 @@ void draw_lines(t_mlx *mlx, int map_x, int map_y, int color, double off)
 	int y = 0;
 	while (y < map_y - off)
 	{
-		int x = map_x;
-		while (x < map_x + 8)
-		{
-			if (map_x < WIN_W &&  map_y <= WIN_H)
-				paint_img(mlx, color, x, off +  y);
-			x++;
-		}
+		if (map_x < WIN_W &&  map_y <= WIN_H)
+			paint_img(mlx, color, map_x, off + y);
 		y++;
 	}
 }
