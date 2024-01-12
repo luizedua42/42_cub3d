@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:51:57 by luizedua          #+#    #+#             */
-/*   Updated: 2024/01/10 11:58:26 by luizedua         ###   ########.fr       */
+/*   Updated: 2024/01/12 13:44:36 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,36 @@ char	**map_creation(t_map *map, t_mlx *mlx)
 	bitmap[7] = "11111111";
 	map->x = 0;
 	map->y = 0;
-	ceiling_color(0xFFFF, mlx);
-	floor_color(0xFFAAFF, mlx);
-	// while (map->y <= 7)
-	// {
-	// 	map->x = 0;
-	// 	while (map->x <= 7)
-	// 	{
-	// 		if (bitmap[map->y][map->x] == '1')
-	// 			draw_square(mlx, map->x * 64, map->y * 64, 0xFFFFFF);
-	// 		map->x++;
-	// 	}
-	// 	map->y++;
-	// }
+	ceiling_color(0x6c6029, mlx);
+	floor_color(0xa39c63, mlx);
+	map->map = bitmap;
 	return (bitmap);
 }
 
+void	draw_map(t_map *map,  t_mlx *mlx, char **bitmap)
+{
+
+	while (map->y < 8)
+	{
+		map->x = 0;
+		while (map->x < 8)
+		{
+			if (bitmap[map->y][map->x] == '1')
+				draw_square(mlx, map->x * 8, map->y * 8, 0xFFFFFF);
+			else
+				draw_square(mlx, map->x * 8, map->y * 8, 0x888888);
+			map->x++;
+		}
+		map->y++;
+	}
+}
 void draw_square(t_mlx *mlx, int map_x, int map_y, int color)
 {
 	int y = 0;
-	while (y < 63)
+	while (y < 8)
 	{
 		int x = 0;
-		while (x < 63)
+		while (x < 8)
 		{
 			paint_img(mlx, color, map_x + x, map_y + y);
 			x++;

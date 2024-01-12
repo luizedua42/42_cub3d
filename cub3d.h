@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:13:51 by luizedua          #+#    #+#             */
-/*   Updated: 2024/01/10 14:05:51 by luizedua         ###   ########.fr       */
+/*   Updated: 2024/01/12 13:44:15 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define RAD 0.0174533
 # define WIN_W 800
 # define WIN_H 600
-# define FOV 45
+# define FOV 60
 // Includes
 # include <mlx.h>
 # include <stdio.h>
@@ -53,6 +53,7 @@ typedef struct s_rays
 
 typedef struct s_map
 {
+	char		**map;
 	int			x;
 	int			y;
 }				t_map;
@@ -80,11 +81,12 @@ void			clear_display(t_mlx *mlx);
 char			**map_creation(t_map *map, t_mlx *mlx);
 void			draw_p1line(t_mlx *mlx);
 void			draw_rays(t_mlx *mlx, double x2, double y2);
-void 			v_rays(t_mlx *mlx, char **map);
+void			v_rays(t_mlx *mlx, char **map);
 void			h_rays(t_mlx *mlx, char **map);
 void			rays(t_mlx *mlx, char ** map);
 void			draw_square(t_mlx *mlx, int map_x, int map_y, int color);
 void			ceiling_color(int color, t_mlx* mlx);
 void			floor_color(int color, t_mlx* mlx);
+void			draw_map(t_map *map,  t_mlx *mlx, char **bitmap);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:16:21 by luizedua          #+#    #+#             */
-/*   Updated: 2024/01/10 12:02:06 by luizedua         ###   ########.fr       */
+/*   Updated: 2024/01/12 11:03:21 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,15 @@ int	main(int argc, char **argv)
 
 void	run_window(t_mlx *mlx)
 {
+	char **map;
 	init_mlx(&mlx);
 	player_init(mlx, 2, 3);
+	map = map_creation(&mlx->map, mlx);
+	rays(mlx, map);
 	mlx_hook(mlx->p_win, 17, 0, close_win, mlx);
 	mlx_hook(mlx->p_win, KeyPress, KeyPressMask, &key_press, mlx);
-	rays(mlx, map_creation(&mlx->map, mlx));
+	mlx_loop_hook(mlx->p_mlx, draw_player, mlx);
 	draw_p1line(mlx);
-	// mlx_loop_hook(mlx->p_mlx, draw_player, mlx);
 	mlx_loop(mlx->p_mlx);
 	return;	
 }
@@ -55,12 +57,12 @@ void	paint_img(t_mlx *mlx, int color, int x, int y)
 
 int	draw_player(t_mlx *mlx)
 {
-	int x = -5;
-	int y = -5;
-	while (y < 5)
+	int x = -2;
+	int y = -2;
+	while (y < 2)
 	{
-		x = -5;
-		while ( x < 5)
+		x = -2;
+		while ( x < 2)
 		{
 			paint_img(mlx, 0xFF0000, mlx->p1.x + x, mlx->p1.y + y);
 			x++;
@@ -94,8 +96,8 @@ int	close_win(t_mlx *mlx)
 
 void player_init(t_mlx *mlx, double x, double y)
 {
-	mlx->p1.x = x * 64;
-	mlx->p1.y = y * 64;
+	mlx->p1.x = x * 8;
+	mlx->p1.y = y * 8;
 	mlx->p1.ang = 0;
 	mlx->p1.dx = cos(mlx->p1.ang);
 	mlx->p1.dy = sin(mlx->p1.ang);
