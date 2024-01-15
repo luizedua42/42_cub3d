@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:16:21 by luizedua          #+#    #+#             */
-/*   Updated: 2024/01/12 11:03:21 by luizedua         ###   ########.fr       */
+/*   Updated: 2024/01/15 12:54:59 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ int	main(int argc, char **argv)
 
 void	run_window(t_mlx *mlx)
 {
-	char **map;
 	init_mlx(&mlx);
 	player_init(mlx, 2, 3);
-	map = map_creation(&mlx->map, mlx);
-	rays(mlx, map);
+	map_creation(&mlx->map);
+	rays(mlx, mlx->map.map);
 	mlx_hook(mlx->p_win, 17, 0, close_win, mlx);
 	mlx_hook(mlx->p_win, KeyPress, KeyPressMask, &key_press, mlx);
 	mlx_loop_hook(mlx->p_mlx, draw_player, mlx);
 	draw_p1line(mlx);
+	free(mlx->map.map);
 	mlx_loop(mlx->p_mlx);
-	return;	
+	return ;
 }
 
 void	paint_img(t_mlx *mlx, int color, int x, int y)
@@ -77,8 +77,8 @@ void	init_mlx(t_mlx **mlx)
 	(*mlx)->p_mlx = mlx_init();
 	(*mlx)->p_win = mlx_new_window((*mlx)->p_mlx, WIN_W, WIN_H, "cub3d");
 	(*mlx)->p_img = mlx_new_image((*mlx)->p_mlx, WIN_W, WIN_H);
-	(*mlx)->i_add = mlx_get_data_addr((*mlx)->p_img, &(*mlx)->bpp, &(*mlx)->size_line, \
-			&(*mlx)->endian);
+	(*mlx)->i_add = mlx_get_data_addr((*mlx)->p_img, &(*mlx)->bpp, \
+										 &(*mlx)->size_line, &(*mlx)->endian);
 	(*mlx)->p1.x = 0;
 	(*mlx)->p1.y = 0;
 	(*mlx)->map.x = 0;

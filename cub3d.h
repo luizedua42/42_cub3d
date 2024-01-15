@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 13:13:51 by luizedua          #+#    #+#             */
-/*   Updated: 2024/01/12 13:44:15 by luizedua         ###   ########.fr       */
+/*   Updated: 2024/01/15 12:09:38 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int				close_win(t_mlx *mlx);
 int				key_press(int key_code, t_mlx *mlx);
 void			paint_img(t_mlx *mlx, int color, int x, int y);
 void			clear_display(t_mlx *mlx);
-char			**map_creation(t_map *map, t_mlx *mlx);
+void			map_creation(t_map *map);
 void			draw_p1line(t_mlx *mlx);
 void			draw_rays(t_mlx *mlx, double x2, double y2);
 void			v_rays(t_mlx *mlx, char **map);

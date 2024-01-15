@@ -6,7 +6,7 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 16:01:11 by luizedua          #+#    #+#             */
-/*   Updated: 2024/01/12 11:00:31 by luizedua         ###   ########.fr       */
+/*   Updated: 2024/01/15 12:10:10 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,8 @@ void	rays(t_mlx *mlx, char ** map)
 	int color = 0;
 	double ri;
 
+	ceiling_color(0x6c6029, mlx);
+	floor_color(0xa39c63, mlx);
 	mlx->rays.ra = (mlx->p1.ang - RAD * (FOV / 2.0));
 	ri = RAD * FOV / WIN_W;
 	while (r < WIN_W)

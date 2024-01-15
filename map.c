@@ -6,37 +6,25 @@
 /*   By: luizedua <luizedua@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 12:51:57 by luizedua          #+#    #+#             */
-/*   Updated: 2024/01/12 13:44:36 by luizedua         ###   ########.fr       */
+/*   Updated: 2024/01/15 12:09:31 by luizedua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	**map_creation(t_map *map, t_mlx *mlx)
+void map_creation(t_map *map)
 {
-	char	**bitmap;
-	int i;
-
-	i = 8;
-	bitmap = calloc(9, sizeof(char *));
-	while (i < 0)
-	{
-		bitmap[i] = calloc(9, sizeof(char));
-	}
-	bitmap[0] = "11111111";
-	bitmap[1] = "10010001";
-	bitmap[2] = "10010001";
-	bitmap[3] = "10010001";
-	bitmap[4] = "10000001";
-	bitmap[5] = "10000101";
-	bitmap[6] = "10000001";
-	bitmap[7] = "11111111";
+	map->map = calloc(9, sizeof(char *));
+	map->map[0] = "11111111";
+	map->map[1] = "10010001";
+	map->map[2] = "10010001";
+	map->map[3] = "10010001";
+	map->map[4] = "10000001";
+	map->map[5] = "10000101";
+	map->map[6] = "10000001";
+	map->map[7] = "11111111";
 	map->x = 0;
 	map->y = 0;
-	ceiling_color(0x6c6029, mlx);
-	floor_color(0xa39c63, mlx);
-	map->map = bitmap;
-	return (bitmap);
 }
 
 void	draw_map(t_map *map,  t_mlx *mlx, char **bitmap)
